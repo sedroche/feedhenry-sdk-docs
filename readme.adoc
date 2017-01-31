@@ -1,87 +1,87 @@
 [[fh-auth]]
 = Auth (fh.auth)
 
-* link:auth[fh.auth Client API]
+* link:auth.adoc[fh.auth Client API]
 
 [[fh-cache]]
 = Cache (fh.cache)
 
-* link:cache.asciidoc[fh.cache Cloud API]
+* link:cache.adoc[fh.cache Cloud API]
 
 [[fh-cloud]]
 = Cloud Calls (fh.cloud)
 
-* link:cloud.asciidoc[fh.cloud Client API]
+* link:cloud.adoc[fh.cloud Client API]
 
 [[fh-db]]
 = Database (fh.db)
 
-* link:db.asciidoc[fh.db Cloud API]
+* link:db.adoc[fh.db Cloud API]
 
 [[fh-getcloudurl]]
 = Cloud URL (fh.getCloudURL)
 
-* link:cloud_app_url.asciidoc[fh.getCloudURL Client API]
+* link:cloud_app_url.adoc[fh.getCloudURL Client API]
 
 [[fh-getfhparams]]
 = FH Params (fh.getFHParams)
 
-* link:default_params.asciidoc[fh.getFHParams Client API]
+* link:default_params.adoc[fh.getFHParams Client API]
 
 [[fh-forms]]
 = App Forms (fh.forms)
 
-* link:forms_client_api.asciidoc[fh.forms Client API]
-* link:forms_cloud_api.asciidoc[fh.forms Cloud API]
+* link:forms_client_api.adoc[fh.forms Client API]
+* link:forms_cloud_api.adoc[fh.forms Cloud API]
 
 [[fh-hash]]
 = Hash (fh.hash)
 
-* link:hash_client_api.asciidoc[fh.hash Client API]
-* link:hash_client_api.asciidoc[fh.hash Cloud API]
+* link:hash_client_api.adoc[fh.hash Client API]
+* link:hash_client_api.adoc[fh.hash Cloud API]
 
 [[fh-host]]
 = Host (fh.host)
 
-* link:host.asciidoc[fh.host Cloud API]
+* link:host.adoc[fh.host Cloud API]
 
 [[fh-init]]
 = Init (fh.init)
 
-* link:init.asciidoc[fh.init Client API]
+* link:init.adoc[fh.init Client API]
 
 [[fh-mbaas]]
 = MBaaS Service Call (fh.mbaas)
 
-* link:mbaas.asciidoc[fh.mbaas Client API]
+* link:mbaas.adoc[fh.mbaas Client API]
 
 [[fh-push]]
 = Push Notifications (fh.push)
 
-* link:push_client_api.asciidoc[fh.push Client API]
-* link:push_cloud_api.asciidoc[fh.push Cloud API]
+* link:push_client_api.adoc[fh.push Client API]
+* link:push_cloud_api.adoc[fh.push Cloud API]
 
 [[fh-sec]]
 = Security [fh.sec)]
 
-* link:sec_client_api.asciidoc[fh.sec Client API]
-* link:sec_cloud_api.asciidoc[fh.sec Cloud API]
+* link:sec_client_api.adoc[fh.sec Client API]
+* link:sec_cloud_api.adoc[fh.sec Cloud API]
 
 [[fh-service]]
 = Service Call (fh.service)
 
-* link:service.asciidoc[fh.service Cloud API]
+* link:service.adoc[fh.service Cloud API]
 
 [[fh-stats]]
 = Stats (fh.stats)
 
-* link:stats.asciidoc[fh.stats Cloud API]
+* link:stats.adoc[fh.stats Cloud API]
 
 [[fh-sync]]
 = Sync Framework (fh.sync)
 
-* link:sync_terminology.asciidoc[Sync Terminology]
-* link:sync_overview.asciidoc[Sync Overview]
-* link:sync_protocol.asciidoc[Sync Protocol]
-* link:sync_cloud_api.asciidoc[fh.sync Cloud API]
-* link:sync_client_api.asciidoc[fh.sync Client API]
+* link:sync_terminology.adoc[Sync Terminology]
+* link:sync_overview.adoc[Sync Overview]
+* link:sync_protocol.adoc[Sync Protocol]
+* link:sync_cloud_api.adoc[fh.sync Cloud API]
+* link:sync_client_api.adoc[fh.sync Client API]
