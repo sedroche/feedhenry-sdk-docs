@@ -1,7 +1,7 @@
 [[fh-auth]]
 = Auth (fh.auth)
 
-* link:auth.asciidoc[fh.auth Client API]
+* link:auth[fh.auth Client API]
 
 [[fh-cache]]
 = Cache (fh.cache)
