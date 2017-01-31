@@ -1,0 +1,122 @@
+include::shared/attributes.adoc[]
+
+[[fh-push]]
+= $fh.push
+
+[source,javascript]
+----
+$fh.push(message, options, callback(err, res))
+----
+
+Send a push message from the cloud to registered clients.
+
+[[fh-push-example]]
+== Example
+
+.Push a message to all devices in all client apps of the associated project
+[source,javascript]
+----
+var message = {
+  alert: "hello from FH"
+}, options = {
+    broadcast: true
+};
+
+$fh.push(message, options,
+  function (err, res) {
+    if (err) {
+      console.log(err.toString());
+    } else {
+      console.log("status : " + res.status);
+    }
+  });
+----
+
+.Push a message for specific deviceType in a specific client app
+[source,javascript]
+----
+var message = {
+  alert: "hello from FH"
+},
+  options = {
+    apps: ["3uzl1ebi6utciy56majgqlj8"], // list of App IDs
+    criteria: {
+      deviceType: "android"
+    }
+  };
+$fh.push(message, options,
+  function (err, res) {
+    if (err) {
+      console.log(err.toString());
+    } else {
+      console.log("status : " + res.status);
+    }
+  });
+----
+
+[[fh-push-parameters]]
+== Parameters
+
+[[fh-push-notification]]
+=== Notification
+
+* `message` Object
+** `alert` String -- The main message
+** `sound` String -- (iOS only) The name of a sound file in the app bundle, or `default`
+** `badge` String -- The number to display as the badge of the app icon
+** `userData` Object -- Any extra user data to be passed
+
+[[fh-push-ios-specific]]
+=== iOS-specific
+
+* `message.apns` Object -- Options specific to the https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW1[Apple Push Notification Service]
+** `title` String -- A short string describing the purpose of the notification
+** `action` String -- The label of the action button
+** `urlArgs` Array -- (Safari only) Values that are paired with the placeholders inside the urlFormatString value of your website.json file
+** `titleLocKey` String --  (iOS only) The key to a title string in the Localizable.strings file for the current localization
+** `titleLocArgs` Array -- (iOS only) Variable string values to appear in place of the format specifiers in title-loc-key
+** `actionCategory` String -- The identifier of the action category for the interactive notification
+** `contentAvailable` Number -- (iOS only) Informs the application that new content is available by delivering a silent notification. The only possible value is `1`.
+
+[[fh-push-windows-specific]]
+=== Windows-specific
+
+* `message.windows` Object -- Options specific to the Windows platform (_Windows Notification Service_ and _Microsoft Push Notification Service_)
+** `type` String -- The type of message to send. Possible values: `toast`, `raw`, `badge` or `tile`.
+** `duration` String -- Duration a Toast message is displayed. Possible values: `long` or `short`.
+** `badge` String -- The glyph to use as the notification badge, instead of a number. Possible values: `none`, `activity`, `alert`, `available`, `away`, `busy`, `newMessage`, `paused`, `playing`, `unavailable`, `error` or `attention`. For more information on badge types, see https://msdn.microsoft.com/en-us/library/windows/apps/hh779719.aspx[official documentation]. For numeric values, use the `message.badge` parameter.
+** `tileType` String -- The tile template, for example, `TileSquareText02` or `TileWideBlockAndText02`. See the https://msdn.microsoft.com/en-us/library/windows/apps/hh761491.aspx[tile template catalog] for all possible values.
+** `images` Array -- List of images displayed on tiles. Either a path to a local file (for example, `Assets/image.png`) or a URL (for example, `http://host/image.png`). The number of elements needs to match the number of images required by the chosen tileType.
+** `textFields` Array -- List of texts displayed on tiles. The number of elements needs to match the number of text fields required by the chosen tileType.
+
+[[fh-push-other-configuration]]
+=== Other configuration
+
+* `options` Object
+* `options.config` Object
+** `ttl` Number -- (APNS and GCM only) The time to live in seconds.
+
+
+[[fh-push-selection-of-client-apps-in-project]]
+=== Selection of client apps in project
+
+WARNING: One of the options -- `broadcast` or `apps` -- must be set manually, there is no default value.
+
+* `options.broadcast` Boolean -- when set to `true`, notification will be sent to all client apps in the project which contains the sending cloud app
+* `options.apps` Array -- list of client app IDs to send the notification to
+
+[[fh-push-filtering-recipients]]
+=== Filtering recipients
+
+* `options.criteria` Object -- Criteria for selection of notification recipients. +
+See link:{ProductFeatures}#sending-notifications[Sending Notifications] for details about these
+criteria.
+** `alias` Array -- list of user-specific identifiers
+** `categories` Array -- list of categories
+** `deviceType` Array -- list of device types
+** `variants` Array -- list of variant IDs
+
+[[fh-push-response-handling]]
+=== Response handling
+
+* `callback(err, res)` Function -- callback invoked after the message is pushed to the integrated push server. If `err` is set, it contains any possible error response. Parameter `res` contains the normal server response.
