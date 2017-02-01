@@ -1,0 +1,152 @@
+include::shared/attributes.adoc[]
+
+[[developing-forms-apps-and-cordova-apps-for-windows]]
+= Developing Forms Apps and Cordova Apps for Windows
+
+.Overview
+This tutorial shows you how to create a Forms app targeting the Windows platform using {ProductName} ({ProductShortName}). The same steps as demonstrated in this tutorial also apply to any Cordova app, not just Forms apps.
+
+Currently, there are several issues preventing support for the Windows platform equivalent to the other platforms, as described in xref:support-for-windows-platforms[Support for Windows Platforms]. Specifically, native Windows 8.1 and Windows 10 apps can't be built by the Platform and have to be built manually. Also, Cordova apps need a small workaround to work properly in Windows 8.1.
+
+TIP: This tutorial is also available as a quick https://vimeo.com/130214184[video walkthrough^].
+
+.Requirements
+* Windows 8.1 or Windows 10
+* 32 or 64-bit machine with minimum 4 GB of RAM
+* http://www.visualstudio.com/downloads/download-visual-studio-vs#d-express-windows-8[Visual Studio 2013 Express^] or higher
+* An existing Forms app or a Cordova app in the Platform. See the link:{DragAndDropAppsGuide}#create-a-forms-project[Create a Forms Project] guide for help with creating a Forms app.
+
+[[steps]]
+== Steps
+
+[[initial-setup]]
+=== Initial Setup
+
+. Download and install Node.js: https://nodejs.org/en/download/.
++
+There's an installer available which guides you through the setup. Make sure to include the _npm package manager_ in the installation. It's a core component which will also be required further in this guide.
+
+. Download and install a git client: https://git-scm.com/download/win +
+Aside from the `git` executable itself, the installer of Git for Windows also provides an emulated Bash shell (called __Git Bash__) and a set of command-line tools in order to provide a familiar development environment. To learn more about the Git for Windows project, see the official website of https://git-for-windows.github.io/[Git for Windows^].
++
+NOTE: Most steps in this guide involving the use of command line can use `cmd` or PowerShell, unless otherwise noted. However, we suggest using the _Git Bash_ command line installed in this step for all the steps.
+
+. Install the Cordova package
++
+[source,bash]
+----
+npm install -g cordova
+----
++
+This installs the Cordova package including a `cordova` executable globally and thus makes it available to all Node.js applications.
+
+. Clone the repository of your app from the Platform.
++
+First, you need to upload your SSH key to the platform for git access to work properly. See link:{LocalDevelopmentGuide}#ssh-key-setup[SSH Key Setup] for details.
++
+Clone the repository of your app:
++
+[source,bash]
+----
+git clone <git-ssh-clone-url-of-your-app>
+----
++
+The Git SSH Clone URL of your app can be found in the App Details.
+
+
+[[cordova-setup]]
+=== Cordova Setup
+
+Normally, Cordova projects are automatically created for your Cordova apps during build in the Platform and the Cordova-specific files and folders are not available in the app's repository. However, when building manually, the Cordova files need to be created and command invoked manually.
+
+Forms apps are based on Cordova and as such they need the same procedure for building as Cordova apps.
+
+. Create a Cordova project
++
+We use the name _winforms_ in this example, but it can be an arbitrary name.
++
+[source,bash]
+----
+cordova create winforms --copy-from <location-of-forms-app>\www
+----
++
+This creates a new Cordova project and copies the assets from the `www` directory into the newly created project's `www` directory.
+
+
+. **Windows 8.1 only**: Apply workaround for dynamic content manipulation in Cordova apps.
++
+See xref:enabling-dynamic-content-in-cordova-on-windows-8-1[Enabling Dynamic Content in Cordova on Windows 8.1] for more information.
++
+[source,bash]
+----
+git clone https://github.com/MSOpenTech/winstore-jscompat.git
+copy winstore-jscompat\winstore-jscompat.js forms\www
+----
++
+The `winstore-jscompat.js` must be included in every HTML file in your Cordova app which does dynamic content manipulation.
++
+[source,html]
+----
+<meta name="format-detection" content="telephone=no">
+<!-- these three js files should be included exactly in this order -->
+<script src="winstore-jscompat.js" type="text/javascript"></script>
+<script src="cordova.js" type="text/javascript"></script>
+<script src="feedhenry.js" type="text/javascript"></script>
+----
+
+. Add the `windows` platform to the Cordova project.
++
+[source,bash]
+----
+cd winforms
+cordova platform add windows
+----
++
+This creates all the source files necessary to build the binary, including a Solution File (.sln) which can be used to import the project into Visual Studio.
+
+. Add the default Cordova plugins.
++
+[source,bash]
+----
+cordova plugin add \
+    cordova-plugin-file \
+    cordova-plugin-camera \
+    cordova-plugin-file-transfer \
+    cordova-plugin-device \
+    cordova-plugin-network-information \
+    cordova-plugin-battery-status \
+    cordova-plugin-device-motion \
+    cordova-plugin-device-orientation \
+    cordova-plugin-geolocation \
+    cordova-plugin-media \
+    cordova-plugin-media-capture \
+    cordova-plugin-dialogs \
+    cordova-plugin-vibration \
+    cordova-plugin-contacts \
+    cordova-plugin-globalization \
+    cordova-plugin-inappbrowser \
+    cordova-plugin-console \
+    https://github.com/fheng/fh-cordova-plugins-api.git
+----
+
+
+[[building-the-binary]]
+=== Building the Binary
+
+The app binary can be built from the command line using Cordova or from Visual Studio and supports both Windows 8.1 and Windows 10.
+
+To build using Cordova:
+
+[source,bash]
+----
+cordova build
+----
+
+To build using Visual Studio, import the solution file (.sln) created in previous step into Visual Studio and build the solution. See xref:building-windows-apps-locally[Building Windows Apps Locally] for details.
+
+Cordova also provides the ability to start an emulator to quickly see the app running:
+
+[source,bash]
+----
+cordova emulate
+----

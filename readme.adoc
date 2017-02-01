@@ -1,6 +1,8 @@
 [[fh-auth]]
 = Auth (fh.auth)
 
+* link:auth_policy_oauth_google.adoc[Google oAuth Guide]
+* link:using_saml_for_authentication.adoc[SAML Guide]
 * link:auth.adoc[fh.auth Client API]
 
 [[fh-cache]]
@@ -31,6 +33,13 @@
 [[fh-forms]]
 = App Forms (fh.forms)
 
+* link:create_a_forms_project.adoc[Create a forms project]
+* link:fhc_create_an_appForms_project.adoc[Create a forms project with fhc]
+* link:app_forms_integration.adoc[Forms Integration Guide]
+* link:create_a_forms_project_single_theme.adoc[Forms Theme Guide]
+* link:app_forms_lifecycle.adoc[Forms Lifecycle Guide]
+* link:windows_forms_apps_tutorial.adoc[Windows Forms Guide]
+* link:create_forms_data_source.adoc[Forms Data Source Guide]
 * link:forms_client_api.adoc[fh.forms Client API]
 * link:forms_cloud_api.adoc[fh.forms Cloud API]
 
@@ -58,6 +67,7 @@
 [[fh-push]]
 = Push Notifications (fh.push)
 
+* link:using_push_notificatins.adoc[Push Notifications Guide]
 * link:push_client_api.adoc[fh.push Client API]
 * link:push_cloud_api.adoc[fh.push Cloud API]
 
@@ -75,6 +85,7 @@
 [[fh-stats]]
 = Stats (fh.stats)
 
+* link:stats_guide.adoc[Stats Guide]
 * link:stats.adoc[fh.stats Cloud API]
 
 [[fh-sync]]
