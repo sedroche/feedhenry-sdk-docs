@@ -1,0 +1,72 @@
+[[sync-server-architecture]]
+= Sync Server Architecture
+
+[[overview]]
+== Overview
+
+* The sync server provides default data access implementations using backend
+data store which the developer can override to store sync record data in
+data stores other than the default store.
+* Collision handlers can also be overridden on a per-dataset level.
+** List Collision, Remove Collision, Handle Collision.
+* The hashing algorithm used for both global and individual sync records can be
+set independently per dataset.
+* The sync server stores data state in backend data store, allowing for
+the sync server to be horizontally scalable.
+** Uses queues in backend data store to manage workers syncing while
+horizontally scaled.
+
+[[architecture]]
+== Architecture
+
+The inner-workings of the sync server architecture consist of HTTP handlers,
+queues, processors and the sync scheduler.
+Each of these components persist any data they need in a MongoDB data store.
+
+.Inner-workings of the sync server architecture
+image::figures/sync_architecture.png[]
+
+=== HTTP Handlers
+These handlers are responsible handling the sync requests from sync clients.
+
+==== Sync HTTP Handler
+Creates or updates the dataset client to be synced and pushes pending records
+and acknowledgements onto their respective queues, so that they will be
+processed later.
+
+Request and response interceptors can be set independently for each dataset.
+
+==== Sync Records HTTP Handler
+Compare up-to-date data with clients state. After getting the delta, iterate
+through all those records, and if any of them pending queue already, remove them
+from the delta and return the updated delta to the client.
+
+=== Queues
+There are three queues which are used in sync:
+
+* `fhsync_queue` - Jobs for datasets to be synced.
+* `fhsync_ack_queue` - Jobs for pending changes that should be acknowledged.
+* `fhsync_pending_queue` - Jobs for pending changes to be processed.
+
+Messages put onto the queues are consumed and acted upon by processors.
+
+=== Processors
+There are three types of processors in sync, one for each queue:
+
+* Sync Processor - Syncs datasets that the Sync Scheduler has marked as needing
+to be synced.
+* Ack Processor - Removes pending records from MongoDB that have been
+acknowledged by a client.
+* Pending Processor - Applies pending changes e.g. `Create`, `Update`, `Delete`
+for a record.
+
+Each worker in a sync server will have one instance of each of these processors
+allowing for the tasks to be distributed when horizontally scaled.
+
+=== Sync Scheduler
+When horizontally scaled, each Sync Worker will attempt to become the Sync
+Scheduler. This is done by trying to obtain a lock which is located in the
+MongoDB datastore. While a worker is the Sync Scheduler, it will determine
+whether datasets need to be synced. It does this by looking at the timestamp
+of the last sync and the sync frequency for the dataset. If a dataset should
+be synced a job is added to `fhsync_queue`.
