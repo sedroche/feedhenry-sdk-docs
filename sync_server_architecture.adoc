@@ -37,9 +37,11 @@ processed later.
 Request and response interceptors can be set independently for each dataset.
 
 ==== Sync Records HTTP Handler
-Compare up-to-date data with clients state. After getting the delta, iterate
-through all those records, and if any of them pending queue already, remove them
-from the delta and return the updated delta to the client.
+Compares up-to-date data with a clients state. After getting the delta, it will
+check for updates than have been processed but not yet synced. The handler will
+iterate through all the records in the delta, if any of them are in the pending
+queue already or have already been applied, it will remove them from the delta
+and return the updated delta to the client.
 
 === Queues
 There are three queues which are used in sync:
