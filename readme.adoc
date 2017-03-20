@@ -94,5 +94,6 @@
 * link:sync_terminology.adoc[Sync Terminology]
 * link:sync_overview.adoc[Sync Overview]
 * link:sync_protocol.adoc[Sync Protocol]
+* link:sync_server_architecture.adoc[Sync Server Architecture]
 * link:sync_cloud_api.adoc[fh.sync Cloud API]
 * link:sync_client_api.adoc[fh.sync Client API]
