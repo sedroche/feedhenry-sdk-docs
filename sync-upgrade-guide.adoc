@@ -1,5 +1,5 @@
 [[sync-upgrade-guide]]
-= Sync Upgrade Guide
+= Server SDK Upgrade Guide
 
 == Overview
 
@@ -8,7 +8,8 @@ This guide is intedend for developers who:
 * and are upgrading the version of `fh-mbaas-api` from `<7.0.0` to `>=7.0.0`
 
 If you are already using `fh-mbaas-api@>=7.0.0`, there is no need to go through this guide.
-There are *no* changes to the Sync Client as part of this upgrade.
+
+Note: There are *no* changes to the Sync Client as part of this upgrade.
 
 == Prerequisites
 
@@ -16,12 +17,12 @@ Prior to `7.0.0` the Sync Server used the `fh.db` API to store sync operational 
 `fh.db` is a wrapper around MongoDB that may go through an intermediate http API (fh-ditch).
 This made for a resticted set of actions that can be preformed on the sync operational data.
 It also limited the potential use of modules that connect directly to MongoDB.
-As for `fh-mbaas-api@7.0.0`, the Sync Server will require a direct connection to MongoDB.
+As of `fh-mbaas-api@7.0.0`, the Sync Server will require a direct connection to MongoDB.
 This means:
 * for a Dynofarm based Environment you will need to 'Upgrade' your App Database
 * for an OpenShift based Environment, no action is required as all Apps get their own Database in MongoDB by default
 
-== Backwards incompatible API changes
+== Data Handler function signature changes
 
 The method signature for sync data handlers have changed.
 If you have implemented/overriden any data handler, you will need to change the parameter ordering.
@@ -92,6 +93,25 @@ sync.globalRemoveCollision(function(dataset_id, collision_hash, callback, meta_d
 sync.removeCollision(function(dataset_id, collision_hash, meta_data, callback) {});
 sync.globalRemoveCollision(function(dataset_id, collision_hash, meta_data, callback) {});
 ```
+
+== Logger changes
+
+The `logLevel` option that can be passed into `fh.sync.init()` is no longer available.
+By default, the Sync Server will not log anything.
+All logging is done using the [debug](https://www.npmjs.com/package/debug) module.
+If you want log output from the Sync Server, you can set the `DEBUG` environment variable.
+For example:
+
+```shell
+DEBUG=fh-mbaas-api:sync
+```
+
+To see all logs from the entire SDK, you can use
+```shell
+DEBUG=fh-mbaas-api:*
+```
+
+All other environment variables & behaviour of the `debug` module can be used if needed.
 
 == Behaviour differences
 
