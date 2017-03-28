@@ -46,9 +46,9 @@ The Client and Node.js API calls for Sync are thoroughly documented here:
 * http://www.javadoc.io/doc/com.feedhenry/fh-android-sdk/3.2.0[Android SDK Docs^]
 
 [[basic-usage]]
-== Basic Usage
+== Getting Started
 
-If you just need to get the sync framework working with your app, here are the steps you need to follow:
+To get the sync framework working with your app, here are the steps you need to follow:
 
 . Init $fh.sync on the client side
 +
@@ -89,12 +89,11 @@ If you just need to get the sync framework working with your app, here are the s
 
   });
 ----
-+
+
 .About the notifications
 The sync framework will emit different types of notifications during the sync life cycle. Depending on your app's requirements, you can choose which type of notifications your app should be listening to and add callbacks. However, it's not mandatory. The sync framework will running perfectly fine without any notification listeners.
 +
 But adding appropriate notification listeners will help improve the user experience of your app when using the sync framework. Here are a few suggestions:
-
 * Show critical error messages to the user because the sync framework will not work properly when this type of errors occured. For example, client_storage_failed.
 * Log other type of errors/failures to the console to help debugging. For example, remote_update_failed, sync_failed.
 * Update the UI related to the sync data if delta is received, it means there are changes to the data and it's better to reflect the changes in the UI ASAP. For example, delta_received, record_delta_received.
@@ -104,7 +103,8 @@ That's pretty much it. Now you just need to make sure to use $fh.sync APIs to pe
 
 . Init $fh.sync on the cloud side
 +
-Just need to call the init function in your cloud app (probably on app start):
+This step is optional, and only required if you are overriding dataset options on the server e.g. the sync loop frequency with the Dataset Backend.
+See the link:#sync-loop-considerations[Considerations] section below if changing the default sync frequency.
 +
 [source,javascript]
 ----
@@ -127,6 +127,19 @@ fhapi.sync.init(datasetId, options, function(err) {
 That's it. You can now use the sync framework in your app. You can find the sample app to demostrate the basic usage : https://github.com/feedhenry-templates/sync-app[Client App^] and https://github.com/feedhenry-templates/sync-cloud[Cloud App^].
 +
 However, if the default data access implementations don't meet your app's requirements, you can provide override functions.
+
+[[sync-loop-considerations]]
+=== Considerations to avoid unnecessary sync loops
+
+Two sync loops may be invoked per sync frequency if the server-side sync frequency differs from the client-side frequency.
+This is because the client and server sync frequencies are set independently. Setting a long frequency on a client does not change the sync frequency on the server.
+The syncFrequency value of the dataset on the server should be set to the sync_frequency value of the corresponding dataset on the client to avoid this.
+
+For example:
+* syncFrequency on the server-side dataset is set to 120 seconds.
+* sync_frequency on the client-side dataset is also set to 120 seconds.
+
+However, if you do want different frequencies on the client & server, you can keep the values different.
 
 [[advanced-usage]]
 == Advanced Usage
