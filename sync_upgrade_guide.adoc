@@ -31,66 +31,66 @@ Here is the full list of data handlers and their signature prior to and as of `7
 
 ```js
 // <7.0.0
-sync.handleList(function(dataset_id, params, callback, meta_data) {});
+sync.handleList(dataset_id, function(dataset_id, params, callback, meta_data) {});
 sync.globalHandleList(function(dataset_id, params, callback, meta_data) {});
 // >=7.0.0
-sync.handleList(function(dataset_id, params, meta_data, callback) {});
+sync.handleList(dataset_id, function(dataset_id, params, meta_data, callback) {});
 sync.globalHandleList(function(dataset_id, params, meta_data, callback) {});
 
 
 // <7.0.0
-sync.handleCreate(function(dataset_id, data, callback, meta_data) {});
+sync.handleCreate(dataset_id, function(dataset_id, data, callback, meta_data) {});
 sync.globalHandleCreate(function(dataset_id, data, callback, meta_data) {});
 // >=7.0.0
-sync.handleCreate(function(dataset_id, data, meta_data, callback) {});
+sync.handleCreate(dataset_id, function(dataset_id, data, meta_data, callback) {});
 sync.globalHandleCreate(function(dataset_id, data, meta_data, callback) {});
 
 
 // <7.0.0
-sync.handleRead(function(dataset_id, uid, callback, meta_data) {});
+sync.handleRead(dataset_id, function(dataset_id, uid, callback, meta_data) {});
 sync.globalHandleRead(function(dataset_id, uid, callback, meta_data) {});
 // >=7.0.0
-sync.handleRead(function(dataset_id, uid, meta_data, callback) {});
+sync.handleRead(dataset_id, function(dataset_id, uid, meta_data, callback) {});
 sync.globalHandleRead(function(dataset_id, uid, meta_data, callback) {});
 
 
 // <7.0.0
-sync.handleUpdate(function(dataset_id, uid, data, callback, meta_data) {});
+sync.handleUpdate(dataset_id, function(dataset_id, uid, data, callback, meta_data) {});
 sync.globalHandleUpdate(function(dataset_id, uid, data, callback, meta_data) {});
 // >=7.0.0
-sync.handleUpdate(function(dataset_id, uid, data, meta_data, callback) {});
+sync.handleUpdate(dataset_id, function(dataset_id, uid, data, meta_data, callback) {});
 sync.globalHandleUpdate(function(dataset_id, uid, data, meta_data, callback) {});
 
 
 // <7.0.0
-sync.handleDelete(function(dataset_id, uid, callback, meta_data) {});
+sync.handleDelete(dataset_id, function(dataset_id, uid, callback, meta_data) {});
 sync.globalHandleDelete(function(dataset_id, uid, callback, meta_data) {});
 // >=7.0.0
-sync.handleDelete(function(dataset_id, uid, meta_data, callback) {});
+sync.handleDelete(dataset_id, function(dataset_id, uid, meta_data, callback) {});
 sync.globalHandleDelete(function(dataset_id, uid, meta_data, callback) {});
 
 
 // <7.0.0
-sync.handleCollision(function(dataset_id, hash, timestamp, uid, pre, post, meta_data) {});
+sync.handleCollision(dataset_id, function(dataset_id, hash, timestamp, uid, pre, post, meta_data) {});
 sync.globalHandleCollision(function(dataset_id, hash, timestamp, uid, pre, post, meta_data) {});
 // >=7.0.0  Adding a callback to the end of the arguments
-sync.handleCollision(function(dataset_id, hash, timestamp, uid, pre, post, meta_data, callback) {});
+sync.handleCollision(dataset_id, function(dataset_id, hash, timestamp, uid, pre, post, meta_data, callback) {});
 sync.globalHandleCollision(function(dataset_id, hash, timestamp, uid, pre, post, meta_data, callback) {});
 
 
 // <7.0.0
-sync.listCollisions(function(dataset_id, callback, meta_data) {});
+sync.listCollisions(dataset_id, function(dataset_id, callback, meta_data) {});
 sync.globalListCollisions(function(dataset_id, callback, meta_data) {});
 // >=7.0.0
-sync.listCollisions(function(dataset_id, meta_data, callback) {});
+sync.listCollisions(dataset_id, function(dataset_id, meta_data, callback) {});
 sync.globalListCollisions(function(dataset_id, meta_data, callback) {});
 
 
 // <7.0.0
-sync.removeCollision(function(dataset_id, collision_hash, callback, meta_data) {});
+sync.removeCollision(dataset_id, function(dataset_id, collision_hash, callback, meta_data) {});
 sync.globalRemoveCollision(function(dataset_id, collision_hash, callback, meta_data) {});
 // >=7.0.0
-sync.removeCollision(function(dataset_id, collision_hash, meta_data, callback) {});
+sync.removeCollision(dataset_id, function(dataset_id, collision_hash, meta_data, callback) {});
 sync.globalRemoveCollision(function(dataset_id, collision_hash, meta_data, callback) {});
 ```
 
