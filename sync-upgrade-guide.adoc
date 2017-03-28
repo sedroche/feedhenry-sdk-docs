@@ -94,25 +94,6 @@ sync.removeCollision(function(dataset_id, collision_hash, meta_data, callback) {
 sync.globalRemoveCollision(function(dataset_id, collision_hash, meta_data, callback) {});
 ```
 
-== Logger changes
-
-The `logLevel` option that can be passed into `fh.sync.init()` is no longer available.
-By default, the Sync Server will not log anything.
-All logging is done using the [debug](https://www.npmjs.com/package/debug) module.
-If you want log output from the Sync Server, you can set the `DEBUG` environment variable.
-For example:
-
-```shell
-DEBUG=fh-mbaas-api:sync
-```
-
-To see all logs from the entire SDK, you can use
-```shell
-DEBUG=fh-mbaas-api:*
-```
-
-All other environment variables & behaviour of the `debug` module can be used if needed.
-
 == Behaviour differences
 
 As the sync server now connects directly to MongoDB, there is some setup time required on startup.
@@ -138,3 +119,21 @@ fh.sync.getEventEmitter().on('sync:ready', function syncReady() {
 });
 ```
 
+== Logger changes
+
+The `logLevel` option that can be passed into `fh.sync.init()` is no longer available.
+By default, the Sync Server will not log anything.
+All logging is done using the [debug](https://www.npmjs.com/package/debug) module.
+If you want log output from the Sync Server, you can set the `DEBUG` environment variable.
+For example:
+
+```shell
+DEBUG=fh-mbaas-api:sync
+```
+
+To see all logs from the entire SDK, you can use
+```shell
+DEBUG=fh-mbaas-api:*
+```
+
+All other environment variables & behaviour of the `debug` module can be used if needed.
