@@ -1,0 +1,9 @@
+[[sync-performance-scaling-guide]]
+= Sync Performance & Scaling Guide
+
+
+== Scaling On OpenShift
+
+The best way to scale the application on OpenShift is to use the auto scaling feature. In order to do that, you first have to make sure metrics is enabled in the OpenShift cluster, and then use the `oc autoscale` command to configure when the application should be scaled.
+
+For example, on OpenShift 3.2, here is the document of how to https://docs.openshift.com/enterprise/3.2/install_config/cluster_metrics.html#metrics-deployer[enable cluster metrics]. Then here is how to https://docs.openshift.com/enterprise/3.2/dev_guide/pod_autoscaling.html#dev-guide-pod-autoscaling[scale the application].
