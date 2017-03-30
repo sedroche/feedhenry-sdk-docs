@@ -98,3 +98,4 @@
 * link:sync_cloud_api.adoc[fh.sync Cloud API]
 * link:sync_client_api.adoc[fh.sync Client API]
 * link:sync_upgrade_guide.adoc[Sync Server Upgrade Guide]
+* link:sync_performance_scaling_guide.adoc[Sync Performance & Scaling Guide]
