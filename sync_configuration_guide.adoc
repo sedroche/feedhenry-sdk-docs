@@ -1,0 +1,65 @@
+[[sync_configuration_guide]]
+
+= Sync Configuration Guide
+
+== Overview
+
+The sync framework offer quite a few configuration options to allow developers to control the behaviour of the sync server.
+This document will explain how to determine the right value for some of those configuration options.
+
+== Configuring Frequency of the Sync Server
+
+You can configure a different sync frequency on the client and on the server.
+In this section, we will focus on how to decide the best value for the sync frequency on the server.
+
+The sync frequency value of a server will determine how often the sync processor runs.
+It is the time the system should wait between 2 sync processes.
+Every time the sync processor executes, it will perform a list operation on the Dataset Backend to synchronize the data with a local copy.
+To determine the best value of the sync frequency, here are the few things you should consider:
+
+=== How quickly do you want your clients to see changes from others?
+
+When a client submits changes, those changes are performed against the Dataset Backend directly.
+However, for other clients, they are getting the data from the local copy (for performance reasons).
+This means other clients will only be able to get the new changes after the next sync processor runs.
+If it's important for other clients to see the changes as soon as possible, then you should consider setting a low value for the sync frequency.
+
+=== How long it takes the sync processor to run?
+
+The sync frequency value will decide how long the system should wait between sync processor executions.
+The sync frequency is the time from the completion of the one execution to the start time of next execution.
+This means there will never be a situation where 2 sync processors will be running at the same time.
+It also means:
+
+  actual sync frequency = sync processor execution time + the sync frequency
+
+
+This will help you to calculate the number of requests the system will make to the Dataset Backend.
+
+To know how long each sync processor execution takes, you can query the sync stats endpoint to see the average `Job Process Time` it takes for the `sync_worker` to complete.
+
+=== How much load can the Dataset Backend service handle?
+
+As mentioned above, everytime when the sync processor runs, it will perform a list operation on the Dataset Backend.
+When you setup the sync frequency, you should be able to estimate how many requests it will generate on your backend, and make sure the backend can handle the load.
+
+For example, if you set the sync frequency of a dataset to be 100ms, and each sync processor execution is taking 100ms to run, that means the server will generate about 5 req/sec to your backend.
+However, if you have another dataset with the same frequency that uses the same backend, it means there will be about 10 req/sec to the backend.
+The rate will be fairly consistent, so you can perform load tests against the backend to determine if your backend can handle that much load.
+
+However, its worth mentioning that this value will not grow when you scale the app.
+For example, if you have multiple workers in your server, the sync processor executions are distributed among the workers rather than duplicated among them.
+This is by design to protect the backend when the app is under heavy load.
+
+=== How much extra load it will cause to the server itself?
+
+When the data is returned from the backend, the server will have to save the data to the local storage (MongoDB).
+The system is smart enough to only perform updates if there are changes.
+But it needs to perform a read operation first to get the current data in the local storage first.
+When there are a lot of sync processor executions, it could cause extra load on the server itself.
+Sometimes you may need to take this into consideration especially if the dataset's size is relatively large.
+
+To understand performance of the server, you can use the sync stats endpoint to check the CPU usages, and the MongoDB operation time to determine if the server is under heavy load.
+
+To summarise, you can use the sync frequency value to control the number of requests the server will generate to your backend.
+It is perfectly fine to set it to 0, as long as the backend can handle the load, and the server itself is not over-loaded.
