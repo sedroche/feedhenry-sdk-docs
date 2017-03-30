@@ -15,7 +15,7 @@ The sync server provides 2 options for you to inspect the performance of itself:
 === 1. Query the `/mbaas/sync/stats` endpoint
 
 By default, the sync framework will save its metrics data into Redis while it's running. 
-You can then send a HTTP GET request to the `/mbaas/sync/status` endpoint to view the summary of those metrics data. 
+You can then send a HTTP GET request to the `/mbaas/sync/stats` endpoint to view the summary of those metrics data. 
 
 The following information is available from this endpoint:
 
@@ -38,7 +38,6 @@ If you want to visualize the current and historical metrics data, you can instru
 
 There are plenty of tutorials online to help setup InfluxDB and Grafana. For example:
 
-* http://www.netinstructions.com/installing-influxdb-and-grafana-on-an-ec2-instance/[How to setup InfluxDB and Grafana on AWS EC2]
 * https://github.com/feedhenry/sync-metrics-openshift[How to setup InfluxDB and Grafana on OpenShift]
 
 Once you have InfluxDB running, you just need to update the following configurations to instruct the sync server to send metrics data:
