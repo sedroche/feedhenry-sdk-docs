@@ -27,20 +27,20 @@ It also means:
 
   actual sync frequency = sync processor execution time + the sync frequency
 
-+
+
 This will help you to calculate the number of requests the system will make to the Dataset Backend.
-+
+
 To know how long each sync processor execution takes, you can query the sync stats endpoint to see the average `Job Process Time` it takes for the `sync_worker` to complete.
 
 === How much load can the Dataset Backend service handle?
 
 As mentioned above, everytime when the sync processor runs, it will perform a list operation on the Dataset Backend.
 When you setup the sync frequency, you should be able to estimate how many requests it will generate on your backend, and make sure the backend can handle the load.
-+
+
 For example, if you set the sync frequency of a dataset to be 100ms, and each sync processor execution is taking 100ms to run, that means the server will generate about 5 req/sec to your backend.
 However, if you have another dataset with the same frequency that uses the same backend, it means there will be about 10 req/sec to the backend.
 The rate will be fairly consistent, so you can perform load tests against the backend to determine if your backend can handle that much load.
-+
+
 However, its worth mentioning that this value will not grow when you scale the app.
 For example, if you have multiple workers in your server, the sync processor executions are distributed among the workers rather than duplicated among them.
 This is by design to protect the backend when the app is under heavy load.
@@ -52,7 +52,7 @@ The system is smart enough to only perform updates if there are changes.
 But it needs to perform a read operation first to get the current data in the local storage first.
 When there are a lot of sync processor executions, it could cause extra load on the server itself.
 Sometimes you may need to take this into consideration especially if the dataset's size is relatively large.
-+
+
 To understand performance of the server, you can use the sync stats endpoint to check the CPU usages, and the MongoDB operation time to determine if the server is under heavy load.
 
 To summarise, you can use the sync frequency value to control the number of requests the server will generate to your backend.
